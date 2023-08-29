@@ -1,4 +1,4 @@
-import {normalize, resolve} from "path";
+import {resolve} from "path";
 
 // Types
 import type {Strapi} from "@strapi/strapi";
@@ -9,7 +9,7 @@ import {generateKey, shouldCache, shouldInvalidateCaches, shouldUseCache} from "
 
 export default (config, {strapi}: {strapi: Strapi})=>
 {
-	const cachefolder = resolve("/home", "endpoint-cache");
+	const cachefolder = resolve("/home", "cache");
 
 	return async (ctx, next) =>
 	{

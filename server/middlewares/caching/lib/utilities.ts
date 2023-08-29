@@ -8,7 +8,7 @@ import {normalize} from "path";
  */
 export const shouldCache = (ctx): boolean=>
 {
-    if (!shouldUseCache)
+    if (!shouldUseCache(ctx))
         return false;
 
     if (ctx.response.status < 200 || ctx.response.status >= 300)
