@@ -15,7 +15,7 @@ export default
             icon: PluginIcon,
             intlLabel: {
                 id: `${pluginId}.plugin.name`,
-                defaultMessage: name,
+                defaultMessage: "API Caches",
             },
             Component: async ()=>
                 await import(/* webpackChunkName: "[request]" */ "./pages/App"),

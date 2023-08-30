@@ -22,5 +22,13 @@ export default {
         config: {
             policies: []
         }
+    },
+    {
+        method: "GET",
+        path: "/caches",
+        handler: "adminController.currentCaches",
+        config: {
+            policies: []
+        }
     }]
 };

@@ -2,7 +2,7 @@ import {Helmet} from "react-helmet";
 import {Check} from "@strapi/icons";
 import {useNotification} from "@strapi/helper-plugin";
 import React, {useState, useEffect, useRef} from "react";
-import {Layout, Button, HeaderLayout, ContentLayout, Box, Main, TextInput, Accordion, AccordionToggle, AccordionContent, Loader, Typography} from "@strapi/design-system";
+import {Layout, Button, HeaderLayout, ContentLayout, Box, Main, TextInput, Accordion, AccordionToggle, AccordionContent, Loader} from "@strapi/design-system";
 
 // Lib
 import {getConfig, getCachableItems, updateConfig} from "../../utils/api";

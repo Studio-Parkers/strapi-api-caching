@@ -1,6 +1,58 @@
+import {resolve} from "path";
+import {readdir, stat} from "fs/promises";
+
+// Types
 import type {Strapi} from "@strapi/strapi";
 
+const formatBytes = (bytes, decimals = 2)=>
+{
+    if (!+bytes)
+        return "0 Bytes"
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ["Bytes", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+}
+
 export default ({strapi}: {strapi: Strapi})=> ({
+    async currentCaches(ctx): Promise<void>
+    {
+        ctx.body = [];
+        const config = await strapi
+            .plugin("strapi-api-caching")
+            .service("adminService")
+            .getConfig();
+
+        if (!config || !config.cacheFolder)
+            return;
+
+        let cacheFiles;
+        try {cacheFiles = await readdir(config.cacheFolder, {recursive: true});}
+        catch(error) {return console.log(error);}
+
+        const results: any[] = [];
+        for (let i in cacheFiles)
+        {
+            const path = resolve(config.cacheFolder, cacheFiles[i]);
+
+            let info;
+            try {info = await stat(path);}
+            catch(error){info = {};}
+
+            results.push({
+                file: path,
+                route: atob(cacheFiles[i].substring(0, cacheFiles[i].length - 5)),
+                size: formatBytes(info.size),
+                date: info.mtime
+            });
+        }
+
+        ctx.body = results;
+        
+    },
     async cachableitems(ctx): Promise<void>
     {
         const results = {};
@@ -16,7 +68,7 @@ export default ({strapi}: {strapi: Strapi})=> ({
             }
         }
     
-        ctx.body = results;
+        ctx.send(results);
     },
     async getConfig(ctx): Promise<void>
     {

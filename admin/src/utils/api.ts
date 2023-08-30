@@ -42,3 +42,16 @@ export const updateConfig = async (config: Record<string, any>): Promise<Record<
 
     return await response.json();
 };
+
+export const getCaches = async (): Promise<any[]>=>
+{
+    const response = await fetch(`${process.env.STRAPI_ADMIN_BACKEND_URL}/${pluginId}/caches`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${auth.getToken()}`,
+            "Content-Type": "application/json",
+        }
+    });
+
+    return await response.json();
+};
