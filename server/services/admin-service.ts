@@ -1,4 +1,4 @@
-export default ({ strapi }) => ({
+export default ({strapi}) => ({
     getConfig()
     {
         try 
