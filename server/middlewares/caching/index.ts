@@ -9,14 +9,18 @@ import {generateKey, shouldCache, shouldInvalidateCaches, shouldUseCache} from "
 
 export default (config, {strapi}: {strapi: Strapi})=>
 {
-	const cachefolder = resolve("/home", "cache");
-
 	return async (ctx, next) =>
 	{
+        const service = strapi.service("plugin::strapi-api-caching.adminService");
+        const pluginConfig = await (service?.getConfig as Function)();
+        if (!pluginConfig || !pluginConfig.cacheFolder)
+            return await next();
+
+        const cachefolder = pluginConfig.cacheFolder;
 		const cacheKey = generateKey(ctx);
 
 		// Try returning cache
-		if (shouldUseCache(ctx))
+		if (shouldUseCache(ctx, pluginConfig.cache))
 		{
 			const cacheContent = await getCache(cacheKey, cachefolder);
 			if (!!cacheContent)
@@ -32,7 +36,7 @@ export default (config, {strapi}: {strapi: Strapi})=>
 		await next();
 
 		// Cache response to file
-		if (shouldCache(ctx))
+		if (shouldCache(ctx, pluginConfig.cache))
 		{
 			updateCache(cacheKey, cachefolder, JSON.stringify(ctx.response.body));
 			ctx.set("X-Cache", "MISS");

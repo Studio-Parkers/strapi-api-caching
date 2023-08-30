@@ -7,15 +7,8 @@ import {findRelatedRoutes} from "./utilities";
 export const getCache = async (key: string, cachefolder: string): Promise<string|null>=>
 {
     const cacheFile = resolve(cachefolder, `${key}.json`);
-
-    let content;
-    try {content = await readFile(cacheFile, "utf8");}
-    catch(error)
-    {
-        strapi.log.warn(`Failed to read cache file: ${cacheFile}.\r\n${JSON.stringify(error)}`);
-        content = null;
-    }
-    return content;
+    try {return await readFile(cacheFile, "utf8");}
+    catch(error) {return null;}
 };
 
 export const updateCache = async (key: string, cachefolder: string, content: string)=>
@@ -38,19 +31,17 @@ export const deleteCache = async (ctx, cachefolder: string)=>
     const relatedRoutes = findRelatedRoutes(urlMatches[0]);
     for (let i in relatedRoutes)
     {
-        const path = relatedRoutes[i].path
-            .toLowerCase()
-            .trim()
-            .substring(1)
-            .replace(/\/$/, "")
-            .replace(/(:\w+)/gm, "(.+)")
-            .replace(/\//gm, "-");
-
         let cacheFiles;
         try {cacheFiles = await readdir(cachefolder, {recursive: true});}
         catch(error) {return strapi.log.warn(`Failed to remove cache: ${JSON.stringify(error)}`);}
 
-        const relatedFiles = cacheFiles.filter(file=> !!file.match(new RegExp(path)));
+        const path = relatedRoutes[i].path.toLowerCase().trim().replace(/(:\w+)/gm, "(.+)");
+        const relatedFiles = cacheFiles.filter(file=> 
+        {
+            const cacheFile = atob(file.substring(0, file.length - 5));
+            return cacheFile.match(new RegExp(`/api${path}`));
+        });
+
         for (let j in relatedFiles)
         {
             const filename = resolve(cachefolder, relatedFiles[j]);

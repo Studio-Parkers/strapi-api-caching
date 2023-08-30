@@ -6,9 +6,9 @@ import {normalize} from "path";
  * @param ctx 
  * @returns 
  */
-export const shouldCache = (ctx): boolean=>
+export const shouldCache = (ctx, config: null|Record<string, {cache: boolean, query: boolean}>): boolean=>
 {
-    if (!shouldUseCache(ctx))
+    if (!shouldUseCache(ctx, config))
         return false;
 
     if (ctx.response.status < 200 || ctx.response.status >= 300)
@@ -22,9 +22,13 @@ export const shouldCache = (ctx): boolean=>
  * @param ctx 
  * @returns 
  */
-export const shouldUseCache = (ctx): boolean=>
+export const shouldUseCache = (ctx, config: null|Record<string, {cache: boolean, query: boolean}>): boolean=>
 {
-    if (!ctx.request.path.startsWith("/api"))
+    if (!config)
+        config = {};
+
+    const path = ctx.request.path.replace("/api", "");
+    if (!config[path] || !config[path].cache)
         return false;
 
     if (ctx.request.method.toLowerCase() !== "get")
@@ -76,19 +80,9 @@ export const findRelatedRoutes = (uid: string)=>
 
 export const generateKey = (ctx): string=>
 {
-    const requestPath = normalize(ctx.request.path)
-        .toLowerCase()
-        .trim()
-        .replace(/\/$/, "") 	  // Remove trailing slash
-        .replace(/\/api\//gm, "") // Remove /api/ from route
-        .replace(/[^\w]/gm, "-"); // Replace special characters with a dash
+    const requestPath = normalize(ctx.request.path).toLowerCase().trim();
 
-    // str.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
-    const keys = Object.keys(ctx.query);	  		  
-    const query = keys.sort()
-        .map(key=> `${key}=${typeof ctx.query[key] === "object" ? JSON.stringify(ctx.query[key]) : ctx.query[key]}`)
-        .join(",")
-        .replace(/(['"])/gm, "");
-
-    return `${requestPath}-${query}`;
+    const keys = Object.keys(ctx.query);
+    const query = keys.sort().map(key=> `${key}=${typeof ctx.query[key] === "object" ? JSON.stringify(ctx.query[key]) : ctx.query[key]}`).join(",");
+    return btoa(`${requestPath}?${query}`);
 };
