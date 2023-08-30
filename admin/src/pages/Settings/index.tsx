@@ -2,7 +2,7 @@ import {Helmet} from "react-helmet";
 import {Check} from "@strapi/icons";
 import {useNotification} from "@strapi/helper-plugin";
 import React, {useState, useEffect, useRef} from "react";
-import {Layout, Button, HeaderLayout, ContentLayout, Box, Main, TextInput, Accordion, AccordionToggle, AccordionContent, Typography, Flex, Badge, Loader} from "@strapi/design-system";
+import {Layout, Button, HeaderLayout, ContentLayout, Box, Main, TextInput, Accordion, AccordionToggle, AccordionContent, Loader, Typography} from "@strapi/design-system";
 
 // Lib
 import {getConfig, getCachableItems, updateConfig} from "../../utils/api";
@@ -111,7 +111,7 @@ const HomePage = ()=>
         <Layout>
             <Helmet title="API Caching Configuration" />
             <Main aria-busy={false}>
-                <HeaderLayout title="Header layout" subtitle="Subtitle" primaryAction={<HeaderLayoutAction />} />
+                <HeaderLayout title="API Caching configuration" primaryAction={<HeaderLayoutAction />} />
 
                 {isLoading && <Loader />}
 
@@ -121,6 +121,9 @@ const HomePage = ()=>
                         <Box shadow="tableShadow" background="neutral0" padding={6} hasRadius marginBottom={6}>
                             <TextInput label="cache dir" hint="Absolute path to the folder you want to store the cache files" value={cacheFolder} onChange={e=> setCacheFolder(e.target.value)} />
                         </Box>
+
+                        <h2 style={{fontSize: "1.5rem", fontWeight: 600, color: "#FFFFFF"}}>Caching options</h2>
+                        <p style={{fontSize: "1rem", margin: "1rem 0", color: "#FFFFFF"}}>Enable caching per route and enable query if you want to cache query parameters.</p>
 
                         {
                             Object.keys(cachableItems).map(name=> 
