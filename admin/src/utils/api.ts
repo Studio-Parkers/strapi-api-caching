@@ -55,3 +55,17 @@ export const getCaches = async (): Promise<any[]>=>
 
     return await response.json();
 };
+
+export const deleteCaches = async (files: string[]): Promise<void>=>
+{
+    const response = await fetch(`${process.env.STRAPI_ADMIN_BACKEND_URL}/${pluginId}/caches`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${auth.getToken()}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({files})
+    });
+
+    return await response.json();
+};

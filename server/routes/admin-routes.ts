@@ -30,5 +30,13 @@ export default {
         config: {
             policies: []
         }
+    },
+    {
+        method: "POST",
+        path: "/caches",
+        handler: "adminController.deleteCaches",
+        config: {
+            policies: []
+        }
     }]
 };

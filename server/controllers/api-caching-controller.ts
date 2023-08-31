@@ -1,5 +1,5 @@
 import {resolve} from "path";
-import {readdir, stat} from "fs/promises";
+import {readdir, stat, rm} from "fs/promises";
 
 // Types
 import type {Strapi} from "@strapi/strapi";
@@ -52,6 +52,24 @@ export default ({strapi}: {strapi: Strapi})=> ({
 
         ctx.body = results;
         
+    },
+    async deleteCaches(ctx): Promise<void>
+    {
+        ctx.body = [];
+        const config = await strapi
+            .plugin("strapi-api-caching")
+            .service("adminService")
+            .getConfig();
+
+        if (!config || !config.cacheFolder)
+            return;
+
+        const files = ctx.request.body.files ?? [];
+        for (let i in files)
+        {
+            try {await rm(files[i]);}
+            catch(error) {strapi.log.warning(`Failed to delete cache file ${files[i]}`);}
+        }
     },
     async cachableitems(ctx): Promise<void>
     {

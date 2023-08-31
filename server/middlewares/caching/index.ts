@@ -7,6 +7,7 @@ import type {Strapi} from "@strapi/strapi";
 import {deleteCache, getCache, updateCache} from "./lib/cache";
 import {generateKey, shouldCache, shouldInvalidateCaches, shouldUseCache} from "./lib/utilities";
 
+// TODO: Implement the optinoal query cache option
 export default (config, {strapi}: {strapi: Strapi})=>
 {
 	return async (ctx, next) =>
