@@ -60,18 +60,6 @@ const HomePage = ()=>
 
     const handelSave = async ()=>
     {
-        console.log({
-            cacheFolder,
-            cache: Object.keys(cachableItems).reduce((result, name)=>
-            {
-                for (let i in cachableItems[name].routes)
-                {
-                    const route = cachableItems[name].routes[i];
-                    result[route.path] = {cache: route.cache, query: route.query};
-                }
-                return result;
-            }, {})
-        });
         updateConfig({
             cacheFolder,
             cache: Object.keys(cachableItems).reduce((result, name)=>
@@ -83,6 +71,14 @@ const HomePage = ()=>
                 }
                 return result;
             }, {})
+        });
+
+        notification({
+            type: "success",
+            message: {
+              id: "update-config-success",
+              defaultMessage: "Updated the config",
+            }
         });
     };
 

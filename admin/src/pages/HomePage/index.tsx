@@ -1,6 +1,6 @@
 import {Trash, Refresh} from "@strapi/icons";
 import React, {useEffect, useState} from "react";
-import {Layout, Main, HeaderLayout, Button, Typography, ContentLayout, Table, Thead, Th, Tr, Tbody, Td, BaseCheckbox, IconButton} from "@strapi/design-system";
+import {Layout, Main, HeaderLayout, Button, Typography, ContentLayout, Table, Thead, Th, Tr, Tbody, Td, BaseCheckbox} from "@strapi/design-system";
 
 // Lib
 import {deleteCaches, getCaches} from "../../utils/api";
