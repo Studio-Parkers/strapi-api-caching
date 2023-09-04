@@ -31,6 +31,9 @@ export const shouldUseCache = (ctx, config: null|Record<string, {cache: boolean,
     if (!config[path] || !config[path].cache)
         return false;
 
+    if (Object.keys(ctx.query).length !== 0 && !config[path].query)
+        return false;
+
     if (ctx.request.method.toLowerCase() !== "get")
         return false;
 
