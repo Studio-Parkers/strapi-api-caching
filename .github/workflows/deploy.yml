@@ -1,0 +1,44 @@
+name: Production release
+
+# Cancel previous workflows
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  release:
+    types: 
+      - released
+
+jobs:
+  version_bump:
+    name: Bump package.json version
+    runs-on: ubuntu-latest
+    steps: 
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: bump version
+        uses: dmikey/package-json-version@v0.0.2
+        with:
+          version: '${{ github.ref_name }}'
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+            node-version: 18.16.0
+            registry-url: https://registry.npmjs.org
+            cache: yarn
+
+      - name: Publish
+        shell: bash
+        run: yarn publish
+        env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push version changes to main branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+            commit_message: "chore: release ${{ github.ref_name }}"
+            branch: ${{ github.event.repository.default_branch }}
+            file_pattern: package.json
