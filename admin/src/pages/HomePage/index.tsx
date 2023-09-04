@@ -1,4 +1,4 @@
-import {Trash} from "@strapi/icons";
+import {Trash, Refresh} from "@strapi/icons";
 import React, {useEffect, useState} from "react";
 import {Layout, Main, HeaderLayout, Button, Typography, ContentLayout, Table, Thead, Th, Tr, Tbody, Td, BaseCheckbox, IconButton} from "@strapi/design-system";
 
@@ -46,9 +46,12 @@ const HomePage = ()=>
     const DeleteButton = ()=>
         <Button loading={isLoading} disabled={selectedCount === 0} onClick={deleteSelected} startIcon={<Trash />}>Delete {selectedCount} selected</Button>
 
+    const RefreshButton = ()=>
+        <Button startIcon={<Refresh />} onClick={loadCaches}>Refresh</Button>;
+
     return (
         <Layout>
-            <HeaderLayout title="API Caches" subtitle="Overview" primaryAction={<DeleteButton />} />
+            <HeaderLayout title="API Caches" subtitle="Overview" secondaryAction={<RefreshButton />} primaryAction={<DeleteButton />} />
 
             <Main>
                 <ContentLayout>
