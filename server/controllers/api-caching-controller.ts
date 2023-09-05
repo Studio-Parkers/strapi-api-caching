@@ -4,6 +4,9 @@ import {readdir, stat, rm} from "fs/promises";
 // Types
 import type {Strapi} from "@strapi/strapi";
 
+// Lib
+import pluginID from "../../admin/src/pluginId";
+
 const formatBytes = (bytes, decimals = 2)=>
 {
     if (!+bytes)
@@ -22,7 +25,7 @@ export default ({strapi}: {strapi: Strapi})=> ({
     {
         ctx.body = [];
         const config = await strapi
-            .plugin("strapi-api-caching")
+            .plugin(pluginID)
             .service("adminService")
             .getConfig();
 
@@ -57,7 +60,7 @@ export default ({strapi}: {strapi: Strapi})=> ({
     {
         ctx.body = [];
         const config = await strapi
-            .plugin("strapi-api-caching")
+            .plugin(pluginID)
             .service("adminService")
             .getConfig();
 
@@ -91,7 +94,7 @@ export default ({strapi}: {strapi: Strapi})=> ({
     async getConfig(ctx): Promise<void>
     {
         const config = await strapi
-            .plugin("strapi-api-caching")
+            .plugin(pluginID)
             .service("adminService")
             .getConfig();
 
@@ -100,7 +103,7 @@ export default ({strapi}: {strapi: Strapi})=> ({
     async updateConfig(ctx): Promise<void>
     {
         const config = await strapi
-            .plugin("strapi-api-caching")
+            .plugin(pluginID)
             .service("adminService")
             .updateConfig(ctx);
 

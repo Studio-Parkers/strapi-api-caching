@@ -1,9 +1,8 @@
-import {resolve} from "path";
-
 // Types
 import type {Strapi} from "@strapi/strapi";
 
 // Lib
+import pluginID from "../../../admin/src/pluginId";
 import {deleteCache, getCache, updateCache} from "./lib/cache";
 import {generateKey, shouldCache, shouldInvalidateCaches, shouldUseCache} from "./lib/utilities";
 
@@ -11,7 +10,7 @@ export default (config, {strapi}: {strapi: Strapi})=>
 {
 	return async (ctx, next) =>
 	{
-        const service = strapi.service("plugin::strapi-api-caching.adminService");
+        const service = strapi.service(`plugin::${pluginID}.adminService`);
         const pluginConfig = await (service?.getConfig as Function)();
         if (!pluginConfig || !pluginConfig.cacheFolder)
             return await next();

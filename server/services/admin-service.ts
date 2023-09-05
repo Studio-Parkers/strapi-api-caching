@@ -1,3 +1,5 @@
+import pluginID from "../../admin/src/pluginId";
+
 export default ({strapi}) => ({
     getConfig()
     {
@@ -6,10 +8,10 @@ export default ({strapi}) => ({
             const pluginStore = strapi.store({
                 environment: strapi.config.environment,
                 type: "plugin",
-                name: "strapi-api-caching"
+                name: pluginID
             });
 
-            return pluginStore.get({key: "strapi-api-caching"});
+            return pluginStore.get({key: pluginID});
         }
         catch (error)
         {
@@ -25,11 +27,11 @@ export default ({strapi}) => ({
             const pluginStore = strapi.store({
                 environment: strapi.config.environment,
                 type: "plugin",
-                name: "strapi-api-caching"
+                name: pluginID
             });
 
             return pluginStore.set({
-                key: "strapi-api-caching",
+                key: pluginID,
                 value: {
                     cacheFolder: ctx.request.body.cacheFolder,
                     cache: ctx.request.body.cache
