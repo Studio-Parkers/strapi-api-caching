@@ -17,9 +17,9 @@ A plugin that caches API responses into a JSON file and serves the file when the
 - NPM >= 6.0.0
 
 ## Features
-- Caches API response (of public GET requests) intro JSON file with hashed request URI as filename
+- Caches API response (of public GET requests) into JSON file with hashed request URI as filename
 - Settings section where you can customize the cache folder, select which endpoints to cache and enable query paramater caching
-- Option to cache query paramters (if turned off, only the root url will be cached and any url including query paramters will never be cached)
+- Option to cache query paramters (if turned off, only the root url will be cached and any url including query paramaters will never be cached)
 
 ## Installation
 Add the plugin to your project:
