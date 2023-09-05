@@ -66,15 +66,36 @@ declare type Route = {
 
 export const findRelatedRoutes = (uid: string)=>
 {
-    const api: Record<string, {routes: {routes: Route[]}[]}> = strapi.api;
+    const api: Record<string, {routes: {routes: Route[]}, contentTypes: Record<string, any>}> = strapi.api;
     const results: Route[] = [];
     
     for (let key in api)
     {
         for (let type in api[key].routes)
         {
-            const routes = api[key].routes[type].routes.filter(route=> route.method.toLowerCase() === "get" && route.config.auth.scope.find(scope=> scope.startsWith(uid)));
+            const typeRoutes = api[key].routes[type].routes;
+            const routes = typeRoutes.filter(route=> route.method.toLowerCase() === "get" && route.config.auth.scope.find(scope=> scope.startsWith(uid)));
             results.push(...routes);
+        }
+    }
+
+    for (let key in api)
+    {
+        for (let contentType in api[key].contentTypes)
+        {
+            const type = api[key].contentTypes[contentType];
+            let hasReference = false;
+            for (let attributeKey in type.attributes)
+            {
+                const attributes = type.attributes[attributeKey];
+                if (attributes.type !== "relation" || attributes.target !== uid)
+                    continue;
+
+                hasReference = true;
+            }
+
+            if (hasReference)
+                results.push(...findRelatedRoutes(type.uid));
         }
     }
 
