@@ -1,6 +1,6 @@
 {
     "name": "strapi-api-caching",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
     "scripts": {
         "develop": "tsc -p tsconfig.server.json -w",
