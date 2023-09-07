@@ -4,7 +4,8 @@
     "license": "MIT",
     "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
     "strapi": {
-        "name": "API Caching",
+        "name": "strapi-api-caching",
+        "displayName": "API Caching",
         "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
         "kind": "plugin"
     },
