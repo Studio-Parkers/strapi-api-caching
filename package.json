@@ -1,16 +1,23 @@
 {
     "name": "strapi-api-caching",
     "version": "1.0.1",
+    "license": "MIT",
     "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
-    "scripts": {
-        "develop": "tsc -p tsconfig.server.json -w",
-        "build": "tsc -p tsconfig.server.json"
-    },
     "strapi": {
         "name": "API Caching",
         "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
         "kind": "plugin"
     },
+    "engines": {
+        "node": ">=14.19.1 <=18.x.x",
+        "npm": ">=6.0.0"
+    },
+    "author": {
+        "name": "Dani Krokkee"
+    },
+    "maintainers": [{
+        "name": "Dani Krokkee"
+    }],
     "dependencies": {
         "@strapi/design-system": "^1.6.3",
         "@strapi/helper-plugin": "^4.6.0",
@@ -35,17 +42,15 @@
         "react-router-dom": "^5.3.4",
         "styled-components": "^5.3.6"
     },
-    "author": {
-        "name": "Dani Krokkee"
+    "scripts": {
+        "develop": "tsc -p tsconfig.server.json -w",
+        "build": "tsc -p tsconfig.server.json"
     },
-    "maintainers": [
-        {
-            "name": "Dani Krokkee"
-        }
-    ],
-    "engines": {
-        "node": ">=14.19.1 <=18.x.x",
-        "npm": ">=6.0.0"
+    "bugs": {
+        "url": "https://github.com/Studio-Parkers/strapi-api-caching/issues"
     },
-    "license": "MIT"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Studio-Parkers/strapi-api-caching.git"
+    }
 }
