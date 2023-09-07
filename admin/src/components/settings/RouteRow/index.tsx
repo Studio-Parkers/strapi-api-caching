@@ -7,10 +7,10 @@ export default ({route, cache, query, onChange})=>
         onChange({...{cache, query}, [name]: value});
 
     return (
-        <Flex gap={3}>
-            <Flex>
+        <Flex gap={3} marginBottom={3}>
+            <Flex flex={1}>
                 <Badge textColor="secondary500" backgroundColor="neutral150">{route.method}</Badge>
-                <Box paddingLeft={3} paddingRight={3} background="neutral0" borderColor="neutral200"><Typography>{route.path}</Typography></Box>
+                <Box paddingLeft={3} paddingRight={3} flex={1} background="neutral0" borderColor="neutral200"><Typography>{route.path}</Typography></Box>
             </Flex>  
 
             <Checkbox value={cache} onValueChange={e=> updateValue("cache", e)}>Cache</Checkbox>
