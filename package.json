@@ -1,6 +1,6 @@
 {
     "name": "strapi-api-caching",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT",
     "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
     "strapi": {
@@ -16,9 +16,11 @@
     "author": {
         "name": "Dani Krokkee"
     },
-    "maintainers": [{
-        "name": "Dani Krokkee"
-    }],
+    "maintainers": [
+        {
+            "name": "Dani Krokkee"
+        }
+    ],
     "dependencies": {
         "@strapi/design-system": "^1.6.3",
         "@strapi/helper-plugin": "^4.6.0",
