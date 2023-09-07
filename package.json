@@ -46,11 +46,8 @@
         "develop": "tsc -p tsconfig.server.json -w",
         "build": "tsc -p tsconfig.server.json"
     },
-    "bugs": {
-        "url": "https://github.com/Studio-Parkers/strapi-api-caching/issues"
-    },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Studio-Parkers/strapi-api-caching.git"
+        "url": "https://github.com/Studio-Parkers/strapi-api-caching"
     }
 }
