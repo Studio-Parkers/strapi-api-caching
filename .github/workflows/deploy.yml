@@ -1,10 +1,5 @@
 name: Production release
 
-# Cancel previous workflows
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 on:
   release:
     types: 
