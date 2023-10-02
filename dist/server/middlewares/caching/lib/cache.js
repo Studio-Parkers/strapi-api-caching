@@ -33,7 +33,7 @@ const updateCache = async (key, cachefolder, content) => {
 exports.updateCache = updateCache;
 const deleteCache = async (ctx, cachefolder) => {
     const urlMatches = ctx.request.url.match(/(api::[a-zA-Z0-9]+\.[a-zA-Z0-9]+)/gm);
-    if (urlMatches.length !== 1)
+    if ((urlMatches === null || urlMatches === void 0 ? void 0 : urlMatches.length) !== 1)
         return;
     const relatedRoutes = (0, utilities_1.findRelatedRoutes)(urlMatches[0]);
     for (let i in relatedRoutes) {
