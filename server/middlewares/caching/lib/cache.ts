@@ -24,7 +24,7 @@ export const updateCache = async (key: string, cachefolder: string, content: str
 
 export const deleteCache = async (ctx, cachefolder: string)=>
 {
-    const urlMatches = ctx.request.url.match(/(api::[a-zA-Z0-9]+\.[a-zA-Z0-9]+)/gm);
+    const urlMatches = ctx.request.url.match(/(api::[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+)/gm);
     if (urlMatches?.length !== 1)
         return;
 
