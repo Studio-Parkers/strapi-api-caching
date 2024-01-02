@@ -1,4 +1,4 @@
-import {resolve} from "path";
+import {resolve, extname} from "path";
 import {readdir, stat, rm} from "fs/promises";
 
 // Types
@@ -36,9 +36,16 @@ export default ({strapi}: {strapi: Strapi})=> ({
         try {cacheFiles = await readdir(config.cacheFolder, {recursive: true});}
         catch(error) {return console.log(error);}
 
+        // Make sure only json files are added
+        cacheFiles = cacheFiles.filter(file=> extname(file).toLowerCase() === ".json");
+
         const results: any[] = [];
         for (let i in cacheFiles)
         {
+            let route;
+            try {route = atob(cacheFiles[i].substring(0, cacheFiles[i].length - 5));}
+            catch(error){continue;}
+
             const path = resolve(config.cacheFolder, cacheFiles[i]);
 
             let info;
@@ -47,7 +54,7 @@ export default ({strapi}: {strapi: Strapi})=> ({
 
             results.push({
                 file: path,
-                route: atob(cacheFiles[i].substring(0, cacheFiles[i].length - 5)),
+                route,
                 size: formatBytes(info.size),
                 date: info.mtime
             });
