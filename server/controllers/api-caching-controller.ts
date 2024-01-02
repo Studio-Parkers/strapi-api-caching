@@ -47,7 +47,6 @@ export default ({strapi}: {strapi: Strapi})=> ({
             catch(error){continue;}
 
             const path = resolve(config.cacheFolder, cacheFiles[i]);
-            console.log(cacheFiles[i);
 
             let info;
             try {info = await stat(path);}
