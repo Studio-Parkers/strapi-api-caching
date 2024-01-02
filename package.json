@@ -1,6 +1,6 @@
 {
     "name": "strapi-api-caching",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "license": "MIT",
     "description": "Middleware that caches JSON API responses in a local file to take off workload off the server",
     "strapi": {
